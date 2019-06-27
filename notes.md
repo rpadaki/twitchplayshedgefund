@@ -11,3 +11,35 @@ I'll need to take a look at the source for the node package `tmi`, which handles
 ## Getting market info and making trades
 
 While mildly sketchy, I'm going to try out <https://aplaca.markets> for now.
+
+# Project Diagram
+
+```
+                                                      AWS or Heroku Server
+
+                             +--------------------------------------------------------------+
+   +---------------------+   |                                                              |
+   |                     |   |  Encode and send video stream                                |
+   |                     |   |                                                              |
+   |    Twitch Stream <---------+ ffmpeg <----------+ Render market data and voting options |
+   |                     |   |                      +                                       |
+   |         +           |   |                                                              |
+Show position|and options|   |                NodeJS Server <---------------+ Request market data and generate orders from votes
+   |         |           |   |                                              v               |
+   |         v        Parse chat and record votes   ^                                       |
+   |                     |   |                      |               alpaca-trade-api-js     |
+   |    Twitch Chat +------------> tmi +------------+                                       |
+   |                     |   |                                              ^               |
+   |         +           |   |                                              | Retrieve market data and submit buy/sell orders
+   |     Make|donations  |   +--------------------------------------------------------------+
+   +---------------------+                                                  |
+             v       Collect and store money                 Fund purchases v
+
+        Venmo/Paypal +-----------------> Personal Bank Account +-------> Alpaca
+
+                                                                            ^
+                                                                            | Source data and fulfil orders
+                                                                            |
+                                                                            v
+
+                                                                    Real-Life Markets

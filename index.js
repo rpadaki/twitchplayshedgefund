@@ -3,6 +3,8 @@ const config = require("./config");
 
 const client = new tmi.client(config.tmi);
 
+console.log("minor change");
+
 function onMessageHandler(target, context, msg, self) {
     if (self) return;
 }
